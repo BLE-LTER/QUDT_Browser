@@ -34,7 +34,6 @@ function parseUnitOwlText(owlText) {
    };
    const allLines = owlText.split(/\r\n|\n/);
    allLines.forEach((line) => {
-      const key = line.substring(0, line.indexOf(":"));
       if (line.substring(0, 5) === "unit:") {
          const id = line.substring(5);
          const href = '"https://qudt.org/vocab/unit/' + id + '.html"';
