@@ -2,12 +2,28 @@
 
 
 function showErr(err) {
+   let spinner = document.getElementById("spinner");
+   spinner.style.display = "none";
    console.log(err);
    alert(err.message);
 }
 
 
+function setMessage(message) {
+   const spinner = document.getElementById("spinner");
+   const messageDiv = document.getElementById("message");
+   if (!message) {
+      spinner.style.display = "none";
+      messageDiv.style.display = "none";
+   } else {
+      spinner.style.display = "block";
+      messageDiv.style.display = "block";
+      messageDiv.innerHTML = message;
+   }
+}
+
 function parseUnitOwlText(owlText) {
+   setMessage("Parsing data...");
    const units = [];
    let unit = {
       Unit: "",
@@ -50,6 +66,9 @@ function parseUnitOwlText(owlText) {
 
 
 function renderTable(units) {
+   setMessage("Rendering table...");
+   const table = document.getElementById("unitTable");
+   table.style.display = "block";
    $("#unitTable").DataTable({
       data: units,
       columns: [{
@@ -73,10 +92,12 @@ function renderTable(units) {
       ],
       paging: false
    });
+   setMessage("");
 }
 
 
 function fetchUnits(qudtUnitListUri) {
+   setMessage("Fetching data...");
    fetch(qudtUnitListUri)
       .then((response) => response.text())
       .then((owlText) => parseUnitOwlText(owlText))
@@ -86,7 +107,7 @@ function fetchUnits(qudtUnitListUri) {
 
 
 window.onload = function () {
-   const qudtUnitListUri = "https://qudt.org/2.1/vocab/unit";
+   const qudtUnitListUri = "https://qudt.org/2.1/vocab/unit";  // not CORS friendly
    const githubUnitListUri = "https://raw.githubusercontent.com/qudt/qudt-public-repo/master/vocab/unit/VOCAB_QUDT-UNITS-ALL-v2.1.ttl";
    fetchUnits(githubUnitListUri);
 };
