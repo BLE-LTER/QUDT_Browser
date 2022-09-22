@@ -9,7 +9,13 @@ function showErr(err) {
 
 function parseUnitOwlText(owlText) {
    const units = [];
-   let unit = None;
+   let unit = {
+      Unit: "",
+      Label: "",
+      UCUM: "",
+      Description: "",
+      UnitType: ""
+   };
    const allLines = owlText.split(/\r\n|\n/);
    allLines.forEach((line) => {
       const key = line.substring(0, line.indexOf(":"));
@@ -81,5 +87,6 @@ function fetchUnits(qudtUnitListUri) {
 
 window.onload = function () {
    const qudtUnitListUri = "https://qudt.org/2.1/vocab/unit";
-   fetchUnits(qudtUnitListUri);
+   const githubUnitListUri = "https://raw.githubusercontent.com/qudt/qudt-public-repo/master/vocab/unit/VOCAB_QUDT-UNITS-ALL-v2.1.ttl";
+   fetchUnits(githubUnitListUri);
 };

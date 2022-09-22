@@ -7,32 +7,35 @@
    <meta name="description" content="A website for browsing and filtering QUDT units">
    <meta name="keywords" content="unit, QUDT, units of measure">
    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-   <script type="text/javascript" charset="utf-8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js">   </script>
+   <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+   <script type="text/javascript" charset="utf-8"
+      src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js">   </script>
    <link rel="stylesheet" type="text/css" href="app.css">
 </head>
 
 <body>
-      <table id="unitTable" class="display" style="width:100%">
-         <thead>
-            <tr>
-               <th>Unit</th>
-               <th>Label</th>
-               <th>UCUM</th>
-               <th>Description</th>
-               <th>Type</th>
-            </tr>
-         </thead>
-         <tbody></tbody>
-         <tfoot>
-            <tr>
-               <th>Unit</th>
-               <th>Label</th>
-               <th>UCUM</th>
-               <th>Description</th>
-               <th>Type</th>
-            </tr>
-         </tfoot>
-      </table>
+   <table id="unitTable" class="display" style="width:100%">
+      <thead>
+         <tr>
+            <th>Unit</th>
+            <th>Label</th>
+            <th>UCUM</th>
+            <th>Description</th>
+            <th>Type</th>
+         </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+         <tr>
+            <th>Unit</th>
+            <th>Label</th>
+            <th>UCUM</th>
+            <th>Description</th>
+            <th>Type</th>
+         </tr>
+      </tfoot>
+   </table>
    <script src="qudt.js"></script>
 </body>
 
