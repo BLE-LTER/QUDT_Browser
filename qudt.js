@@ -27,7 +27,8 @@ function setMessage(message) {
 
 
 function bin(data) {
-   var letter, bins = {};
+   var letter;
+   var bins = {};
 
    for (var i = 0, ien = data.length; i < ien; i++) {
       const link = data[i];
@@ -67,21 +68,39 @@ function parseUnitOwlText(owlText) {
             Label: "",
             UCUM: "",
             Description: "",
-            UnitType: ""
+            UnitType: "",
+            LabelLang: ""
          };
          units.push(unit);
-      } else if (line.substring(0, 36) === "  qudt:hasQuantityKind quantitykind:" && !unit.UnitType) {
-         unit.UnitType = line.substring(36, line.length - 2);
+      } else if (line.substring(0, 36) === "  qudt:hasQuantityKind quantitykind:") {
+         const unitType = line.substring(36, line.length - 2);
+         if (!unit.UnitType) {
+            unit.UnitType = unitType;
+         }
+         else {
+            unit.UnitType += ", " + unitType;
+         }
       } else if (line.substring(0, 27) === "  qudt:plainTextDescription" && !unit.Description) {
          unit.Description = line.substring(29, line.length - 3);
       } else if (line.substring(0, 15) === "  qudt:ucumCode" && !unit.UCUM) {
          let ucum = line.substring(17);
          ucum = ucum.substring(0, ucum.indexOf('"'));
          unit.UCUM = ucum;
-      } else if (line.substring(0, 12) === "  rdfs:label" && !unit.Label) {
+      } else if (line.substring(0, 12) === "  rdfs:label") {
+         // Prefer the en-us version of the label
          let label = line.substring(14);
-         label = label.substring(0, label.indexOf('"@'));
-         unit.Label = label;
+         const at = label.indexOf('"@')
+         // The language is the part between the @ symbol and the semi-colon
+         const lang = label.substring(at + 2, label.length - 1).trim();
+         label = label.substring(0, at);
+         if (!unit.Label || lang === "en-us") {
+            unit.Label = label;
+            unit.LabelLang = lang;
+         }
+         else if (lang === "en" && unit.LabelLang !== "en-us") {
+            unit.Label = label;
+            unit.LabelLang = lang;
+         }
       }
    });
    return units;
